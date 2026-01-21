@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Health</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#000;
+    color:#ffffff90;
+}
+.nav{
+    background:#1B1B1B;
+    height:60px;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+.nav ul{
+    display:flex;
+    list-style:none;
+}
+.nav ul li{
+    margin:0 20px;
+}
+.nav ul li a{
+    color:#9C9C9C;
+    text-decoration:none;
+    font-size:18px;
+}
+.container{
+    width:100%;
+    min-height:100vh;
+    background:#000;
+}
+.hero{
+    padding:100px;
+}
+.hero h1{
+    font-size:42px;
+}
+.btn{
+    margin-top:30px;
+    padding:15px 30px;
+    background:#62BA1B;
+    border:none;
+    color:#fff;
+    cursor:pointer;
+    font-size:16px;
+}
+.btn:hover{
+    background:#3F8E00;
+}
+.section{
+    padding:100px;
+    background:#fff;
+    color:#000;
+}
+.section h2{
+    text-align:center;
+    font-size:32px;
+}
+.section p{
+    text-align:center;
+    margin-top:20px;
+    color:#555;
+    line-height:26px;
+}
+.features-wrapper{
+    overflow:hidden;
+    background:#f5f5f5;
+    padding:20px 0;
+}
+.features{
+    display:flex;
+    gap:20px;
+    animation:scroll 20s linear infinite;
+}
+.card{
+    width:550px;
+    background:#62BA1B;
+    color:#fff;
+    padding:30px;
+    border-radius:10px;
+}
+@keyframes scroll{
+    0%{transform:translateX(0);}
+    100%{transform:translateX(-50%);}
+}
+.form-section{
+    background:#000;
+    padding:100px;
+}
+.form{
+    width:400px;
+    margin:50px auto;
+}
+.form-group{
+    margin-bottom:20px;
+}
+.form-group label{
+    display:block;
+    margin-bottom:8px;
+}
+.form-group input,
+.form-group textarea{
+    width:100%;
+    padding:10px;
+    border:none;
+    border-radius:5px;
+}
+.records{
+    background:#F4F8F2;      
+    color:#000;
+    padding:100px;
+}
+.records h2{
+    text-align:center;
+    margin-bottom:40px;
+}
+.record{
+    background:#FFFFFF;      
+    color:#000;
+    border-left:5px solid #62BA1B;
+    padding:25px;
+    margin-bottom:20px;
+    border-radius:10px;
+    box-shadow:0 4px 10px rgba(0,0,0,0.08);
+}
+.footer{
+    background:#1B1B1B;
+    color:#9C9C9C;
+    text-align:center;
+    padding:20px;
+}
+</style>
+</head>
+
+<body>
+<div class="nav">
+    <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Impact</a></li>
+        <li><a href="#">Features</a></li>
+        <li><a href="#form">Add Record</a></li>
+    </ul>
+</div>
+<div class="container">
+    <div class="hero">
+        <h1>Digital Health</h1><br><br>
+        <p>"Turn paper prescriptions and lab <br> reports into secure, digital patient records.”<br><br><br>
+           “Track patient history, trends, <br> and follow-ups effortlessly.”</p>
+        <button class="btn" onclick="scrollToForm()">Add Patient Record</button>
+    </div>
+</div>
+<div class="section">
+    <h2>Impact</h2>
+    <p>
+        • Better continuity of care<br>
+        • Improved patient outcomes<br>
+        • Reduces paper records<br>
+        • Supports healthcare workers<br>
+    </p>
+
+    <div class="features-wrapper">
+        <div class="features">
+            <div class="card"><h3>Paper Records</h3><p>Hard to maintain</p></div>
+            <div class="card"><h3>No Continuity</h3><p>Patient history lost</p></div>
+            <div class="card"><h3>No Trends</h3><p>No long-term analysis</p></div>
+            <div class="card"><h3>Paper Records</h3><p>Hard to maintain</p></div>
+        </div>
+    </div>
+</div>
+<div class="form-section" id="form">
+    <h2>Add Patient Record</h2>
+    <div class="form">
+        <div class="form-group">
+            <label>Patient Name</label>
+            <input id="name">
+        </div>
+        <div class="form-group">
+            <label>Age</label>
+            <input type="number" id="age">
+        </div>
+        <div class="form-group">
+            <label>Blood Sugar</label>
+            <input type="number" id="sugar">
+        </div>
+        <div class="form-group">
+            <label>Blood Pressure</label>
+            <input id="bp">
+        </div>
+        <div class="form-group">
+            <label>Follow-up Date</label>
+            <input type="date" id="followup">
+        </div>
+        <div class="form-group">
+            <label>Notes</label>
+            <textarea id="notes"></textarea>
+        </div>
+        <button class="btn" onclick="saveRecord()">Save</button>
+    </div>
+</div>
+<div class="records">
+    <h2>Saved Records</h2>
+    <div id="recordList"></div>
+</div>
+<div class="footer">Made with ❤ for Hackathon</div>
+
+<script>
+function scrollToForm(){
+    document.getElementById("form").scrollIntoView({behavior:"smooth"});
+}
+
+function saveRecord(){
+    let data={
+        name:name.value,
+        age:age.value,
+        sugar:sugar.value,
+        bp:bp.value,
+        followup:followup.value,
+        notes:notes.value
+    };
+
+    if(Object.values(data).includes("")){
+        alert("Fill all fields");
+        return;
+    }
+
+    let records=JSON.parse(localStorage.getItem("records"))||[];
+    records.push(data);
+    localStorage.setItem("records",JSON.stringify(records));
+    displayRecords();
+}
+
+function displayRecords(){
+    let records=JSON.parse(localStorage.getItem("records"))||[];
+    recordList.innerHTML=records.map(r=>`
+        <div class="record">
+            <strong>Name:</strong> ${r.name}<br>
+            <strong>Age:</strong> ${r.age}<br>
+            <strong>Sugar:</strong> ${r.sugar}<br>
+            <strong>BP:</strong> ${r.bp}<br>
+            <strong>Follow-up:</strong> ${r.followup}<br>
+            <strong>Notes:</strong> ${r.notes}
+        </div>
+    `).join("");
+}
+displayRecords();
+</script>
+
+</body>
+</html>
